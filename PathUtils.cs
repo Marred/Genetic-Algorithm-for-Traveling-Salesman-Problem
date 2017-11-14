@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using WdTIGS.Models;
 
 namespace WdTIGS
 {
@@ -22,11 +23,10 @@ namespace WdTIGS
 
         static int numOfCities;
         static int[,] distances;
-        static int[][] instances;
 
         private static void ReadDistances()
         {
-            StreamReader reader = new StreamReader(@"C:\berlin52.txt");
+            StreamReader reader = new StreamReader(@"berlin52.txt");
             numOfCities = Int32.Parse(reader.ReadLine());
             distances = new int[numOfCities, numOfCities];
 
@@ -41,37 +41,39 @@ namespace WdTIGS
             }
         }
 
-        public void RandomizeInstances(int numberOfInstances)
+        public Instance[] RandomizeInstances(int numberOfInstances)
         {
-            instances = new int[numberOfInstances][];
+            var instances = new Instance[numberOfInstances];
             Random random = new Random();
             for (int i = 0; i < numberOfInstances; i++)
             {
-                instances[i] = new int[numOfCities];
+                instances[i].Cities = new int[numOfCities];
                 List<int> list = Enumerable.Range(0, numOfCities).ToList();
                 int temp;
                 for (int j = 0; j < numOfCities; j++)
                 {
                     temp = random.Next(list.Count);
-                    instances[i][j] = list[temp];
+                    instances[i].Cities[j] = list[temp];
                     list.RemoveAt(temp);
                 }
+                instances[i].Distance = GetSumDistance(instances[i].Cities);
             }
+            return instances;
         }
 
-        public void SaveInstance(int index)
+        public void SaveInstance(Instance instance)
         {
             string text = string.Empty;
-            foreach(var instance in instances[index])
+            foreach(var city in instance.Cities)
             {
-                text += instance + "-";
+                text += city + "-";
             }
             text = text.Remove(text.Length - 1, 1);
-            text += " " + GetSumDistance(instances[index]);
-            System.IO.File.WriteAllText(@"C:\Users\redzi\Desktop\odleglosci\result.txt", text);
+            text += " " + instance.Distance;
+            System.IO.File.WriteAllText(@"odleglosci/result.txt", text);
         }
 
-        private static int GetSumDistance(int[] instance)
+        public static int GetSumDistance(int[] instance)
         {
             int sum = 0;
             for (int i = 1; i < instance.Length; i++)
