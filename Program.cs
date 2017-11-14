@@ -22,6 +22,7 @@ namespace VSCode
             Instance[] winners = tournamentUtils.Tournament(instances, 4);
             
             int minDistance = winners.Min(y => y.Distance);
+            
             pathUtils.SaveInstance(winners.First(x => x.Distance == minDistance));
         }
     }
