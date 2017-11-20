@@ -37,10 +37,13 @@ namespace WdTIGS
                 for (int j = 0; j < values.Length; j++)
                 {
                     distances[i, j] = Int32.Parse(values[j]);
+
+                    if(i > j) distances[j, i] = Int32.Parse(values[j]);
                 }
             }
         }
 
+        //losowanie bez zwracania bez list? distance async?
         public Instance[] RandomizeInstances(int numberOfInstances)
         {
             var instances = new Instance[numberOfInstances];
@@ -78,15 +81,15 @@ namespace WdTIGS
             int sum = 0;
             for (int i = 1; i < instance.Length; i++)
             {
-                sum += GetSingleDistance(instance[i - 1], instance[i]);
+                sum+= distances[instance[i - 1], instance[i]];//sum += GetSingleDistance(instance[i - 1], instance[i]);
             }
-            sum += GetSingleDistance(instance[0], instance[instance.Length - 1]);
+            sum += distances[instance[0], instance[instance.Length - 1]];//GetSingleDistance(instance[0], instance[instance.Length - 1]);
             return sum;
         }
 
-        private static int GetSingleDistance(int a, int b)
-        {
-            return a > b ? distances[a, b] : distances[b, a];
-        }
+        // private static int GetSingleDistance(int a, int b)
+        // {
+        //     return a > b ? distances[a, b] : distances[b, a];
+        // }
     }
 }
