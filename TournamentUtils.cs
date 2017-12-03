@@ -44,7 +44,6 @@ namespace WdTIGS
                 // winners[i] = group.First(x => x.Distance == minDistance);
                 winners[i] = winner;
             }
-            Console.WriteLine("We have a winner!");
             return winners;
         }
     }

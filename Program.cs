@@ -20,19 +20,22 @@ namespace VSCode
             PathUtils pathUtils = PathUtils.Instance;
             TournamentUtils tournamentUtils = TournamentUtils.Instance;
             RouletteUtils rouletteUtils = RouletteUtils.Instance;
+            PmxCrossoverUtils pmxUtils = PmxCrossoverUtils.Instance;
 
 
-            instances = pathUtils.RandomizeInstances(10000000);
+            instances = pathUtils.RandomizeInstances(20);
 
-
-            Instance[] winners = tournamentUtils.Tournament(instances, 4);
-            //Instance[] winners = rouletteUtils.Roulette(instances);
+            for(int i = 0; i < 1000000; i++) {
+                Instance[] winners = tournamentUtils.Tournament(instances, 4);
+                //Instance[] winners = rouletteUtils.Roulette(instances);
+                instances = pmxUtils.CrossPopulation(winners);
+            }
             
             Console.WriteLine("Time elapsed: " + watch.Elapsed);
             
-            int minDistance = winners.Min(y => y.Distance);
+            int minDistance = instances.Min(y => y.Distance);
 
-            pathUtils.SaveInstance(winners.First(x => x.Distance == minDistance));
+            pathUtils.SaveInstance(instances.First(x => x.Distance == minDistance));
         }
     }
 }
