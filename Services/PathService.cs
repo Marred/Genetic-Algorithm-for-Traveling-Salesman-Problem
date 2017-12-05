@@ -5,20 +5,20 @@ using System.Linq;
 using System.Text;
 using WdTIGS.Models;
 
-namespace WdTIGS
+namespace WdTIGS.Services
 {
-    class PathUtils
+    class PathService
     {
-        private PathUtils() {
+        private PathService() {
             ReadDistances();
         }
 
-        public static PathUtils Instance { get { return Nested.instance;  } }
+        public static PathService Instance { get { return Nested.instance;  } }
 
         private class Nested
         {
             static Nested() { }
-            internal static readonly PathUtils instance = new PathUtils();
+            internal static readonly PathService instance = new PathService();
         }
 
         static int numOfCities;
@@ -44,9 +44,9 @@ namespace WdTIGS
         }
 
         //losowanie bez zwracania bez list? distance async?
-        public Instance[] RandomizeInstances(int numberOfInstances)
+        public Subject[] RandomizeInstances(int numberOfInstances)
         {
-            var instances = new Instance[numberOfInstances];
+            var instances = new Subject[numberOfInstances];
             Random random = new Random();
             for (int i = 0; i < numberOfInstances; i++)
             {
@@ -64,8 +64,9 @@ namespace WdTIGS
             return instances;
         }
 
-        public void SaveInstance(Instance instance)
+        public void SaveInstance(Subject instance)
         {
+            Console.WriteLine("Best distance: " + instance.Distance);
             string text = string.Empty;
             foreach(var city in instance.Cities)
             {

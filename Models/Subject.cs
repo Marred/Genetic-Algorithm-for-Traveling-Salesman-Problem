@@ -1,5 +1,5 @@
 namespace WdTIGS.Models {
-    struct Instance {
+    struct Subject {
         public int[] Cities;
         public int Distance;
     }

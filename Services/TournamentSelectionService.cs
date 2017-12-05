@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using WdTIGS.Models;
 
-namespace WdTIGS
+namespace WdTIGS.Services
 {
-    class TournamentUtils
+    class TournamentService : ISelectionService
     {
-        private TournamentUtils() {
+        private TournamentService() {
         }
 
-        public static TournamentUtils Instance { get { return Nested.instance;  } }
+        public static TournamentService Instance { get { return Nested.instance;  } }
 
         private class Nested
         {
             static Nested() { }
-            internal static readonly TournamentUtils instance = new TournamentUtils();
+            internal static readonly TournamentService instance = new TournamentService();
         }
 
-        public Instance[] Tournament(Instance[] baseInstances, int groupSize = 4) {
-            Instance[] winners = new Instance[baseInstances.Length];
+        public Subject[] Select(Subject[] baseInstances, int groupSize = 4) {
+            Subject[] winners = new Subject[baseInstances.Length];
             Random random = new Random();
-            Instance winner = new Instance();
+            Subject winner = new Subject();
             for(int i = 0; i < winners.Length; i++) {
                 //List<int> list = Enumerable.Range(0, baseInstances.Length).ToList();
                 //int temp;
                 //Instance[] group = new Instance[groupSize];
                 int minDistance = Int32.MaxValue;
-                Instance temp;
+                Subject temp;
 
                 for (int j = 0; j < groupSize; j++)
                 {

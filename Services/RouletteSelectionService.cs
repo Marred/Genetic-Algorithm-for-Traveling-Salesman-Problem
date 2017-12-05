@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using WdTIGS.Models;
 
-namespace WdTIGS
+namespace WdTIGS.Services
 {
-    class RouletteUtils
+    class RouletteService : ISelectionService
     {
-        private RouletteUtils() {
+        private RouletteService() {
         }
 
-        public static RouletteUtils Instance { get { return Nested.instance;  } }
+        public static RouletteService Instance { get { return Nested.instance;  } }
 
         private class Nested
         {
             static Nested() { }
-            internal static readonly RouletteUtils instance = new RouletteUtils();
+            internal static readonly RouletteService instance = new RouletteService();
         }
 
-        public Instance[] Roulette(Instance[] baseInstances, int groupSize = 4) {
-            Instance[] winners = new Instance[baseInstances.Length];
+        public Subject[] Select(Subject[] baseInstances, int groupSize = 4) {
+            Subject[] winners = new Subject[baseInstances.Length];
             Random random = new Random();
             for(int i = 0; i < baseInstances.Length; i++) {
-                Instance[] group = new Instance[groupSize];
+                Subject[] group = new Subject[groupSize];
                 int maxDistance = Int32.MinValue;
 
                 for(int j = 0; j < groupSize; j++) {
