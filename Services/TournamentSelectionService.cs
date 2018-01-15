@@ -18,7 +18,7 @@ namespace WdTIGS.Services
             internal static readonly TournamentService instance = new TournamentService();
         }
 
-        public Subject[] Select(Subject[] baseInstances, int groupSize = 4) {
+        public Subject[] Select(in Subject[] baseInstances, int groupSize = 4) {
             Subject[] winners = new Subject[baseInstances.Length];
             Random random = new Random();
             Subject winner = new Subject();

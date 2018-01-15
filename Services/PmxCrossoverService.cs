@@ -18,7 +18,7 @@ namespace WdTIGS.Services
             internal static readonly PmxCrossoverService instance = new PmxCrossoverService();
         }
 
-        public Subject[] CrossPopulation(Subject[] parents, int crossoverChance = 85, int mutationChance = 5) {
+        public Subject[] CrossPopulation(in Subject[] parents, int crossoverChance = 85, int mutationChance = 5) {
             this.mutationChance = mutationChance;
 
             Subject[] children = new Subject[parents.Length];
@@ -32,12 +32,21 @@ namespace WdTIGS.Services
                     children[i] = parents[i];
                     children[i+1] = parents[i + 1];
                 }
+
+                if (r.Next(100) < mutationChance)
+                {
+                    InversionMutation(children[i].Cities);
+                }
+                if (r.Next(100) < mutationChance)
+                {
+                    InversionMutation(children[i+1].Cities);
+                }
             }
 
             return children;
         }
 
-        private Subject CrossInstances(Subject parent1, Subject parent2) {
+        private Subject CrossInstances(in Subject parent1, in Subject parent2) {
             Subject child = new Subject();
             child.Cities = new int[parent1.Cities.Length];
 
@@ -83,9 +92,6 @@ namespace WdTIGS.Services
 
             for(int i = 0; i < child.Cities.Length; i++) {
                 if(child.Cities[i] == -1) child.Cities[i] = parent2.Cities[i];
-            }
-            if(r.Next(100) < mutationChance) {
-                InversionMutation(child.Cities);
             }
             
             child.Distance = PathService.GetSumDistance(child.Cities);

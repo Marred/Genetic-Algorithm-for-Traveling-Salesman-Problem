@@ -18,32 +18,32 @@ namespace WdTIGS.Services
             internal static readonly RouletteService instance = new RouletteService();
         }
 
-        public Subject[] Select(Subject[] baseInstances, int groupSize = 4) {
+        public Subject[] Select(in Subject[] baseInstances, int groupSize = 4) {
             Subject[] winners = new Subject[baseInstances.Length];
             Random random = new Random();
             for(int i = 0; i < baseInstances.Length; i++) {
-                Subject[] group = new Subject[groupSize];
-                int maxDistance = Int32.MinValue;
+            //    Subject[] group = new Subject[baseInstances.Length];
+                int maxDistance = baseInstances.Max(instance => instance.Distance);
 
-                for(int j = 0; j < groupSize; j++) {
-                    group[j] = baseInstances[random.Next(baseInstances.Length)];
-                    if(group[j].Distance > maxDistance) maxDistance = group[j].Distance;
-                }
+                //for(int j = 0; j < baseInstances.Length; j++) {
+                //    group[j] = baseInstances[random.Next(baseInstances.Length)];
+                //    if(group[j].Distance > maxDistance) maxDistance = group[j].Distance;
+                //}
 
-                int[] scores = new int[groupSize];
+                int[] scores = new int[baseInstances.Length];
                 int scoresSum = 0;
                 
-                for(int j = 0; j < groupSize; j++) {
-                    scores[j] = maxDistance + 1 - group[j].Distance;
+                for(int j = 0; j < baseInstances.Length; j++) {
+                    scores[j] = maxDistance + 1 - baseInstances[j].Distance;
                     scoresSum += scores[j];
                 }
 
                 int k = 0;
                 int r = random.Next(scoresSum);
-                for(int j = 0; j < groupSize; j++) {
+                for(int j = 0; j < baseInstances.Length; j++) {
                     k+= scores[j];
                     if(r < k) {
-                        winners[i] = group[j];
+                        winners[i] = baseInstances[j];
                         break;
                     }
                 }

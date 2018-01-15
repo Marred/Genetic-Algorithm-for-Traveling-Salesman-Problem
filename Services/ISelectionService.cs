@@ -4,6 +4,6 @@ namespace WdTIGS.Services
 {
     interface ISelectionService
     {
-        Subject[] Select(Subject[] baseInstances, int groupSize = 4);
+        Subject[] Select(in Subject[] baseInstances, int groupSize = 4);
     }
 }
