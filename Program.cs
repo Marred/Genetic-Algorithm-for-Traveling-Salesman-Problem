@@ -28,17 +28,18 @@ namespace VSCode
 
             instances = pathService.RandomizeInstances(40);
 
-            for(int i = 0; i < 200000; i++) {
+            for(int i = 0; i < 100000; i++) {
                 Random r = new Random();
-                instances = (r.Next(100) > 95) ? selectionService.Select(instances) : secondarySelectionService.Select(instances);
+                instances = (r.Next(100) > 97) ? selectionService.Select(instances) : secondarySelectionService.Select(instances);
+                //instances = secondarySelectionService.Select(instances);
                 //instances = selectionService.Select(instances);
-                if(i< 150000) instances = crossoverService.CrossPopulation(instances, 85, 30);
-                else instances = crossoverService.CrossPopulation(instances, 80, 15);
+                if (i< 80000) instances = crossoverService.CrossPopulation(instances, 80, 45);
+                else instances = crossoverService.CrossPopulation(instances, 90, 15);
                 minDitanceInIntance = instances.Min(x => x.Distance);
-                if (min.Distance == 0 || min.Distance > minDitanceInIntance)
+                if (min.Cities == null || min.Distance > minDitanceInIntance)
                 {
-                    Console.WriteLine($"Generacja: {i}, wynik: {minDitanceInIntance}");
                     min = instances.First(x => x.Distance == minDitanceInIntance);
+                    Console.WriteLine($"Generacja: {i}, wynik: {min.Distance}");
                 }
             }
             

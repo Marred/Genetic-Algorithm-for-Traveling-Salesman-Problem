@@ -94,7 +94,7 @@ namespace WdTIGS.Services
                 if(child.Cities[i] == -1) child.Cities[i] = parent2.Cities[i];
             }
             
-            child.Distance = PathService.GetSumDistance(child.Cities);
+            //child.Distance = PathService.GetSumDistance(child.Cities);
             return child;
         }
 

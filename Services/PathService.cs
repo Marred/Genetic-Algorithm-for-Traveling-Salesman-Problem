@@ -59,7 +59,7 @@ namespace WdTIGS.Services
                     instances[i].Cities[j] = list[temp];
                     list.RemoveAt(temp);
                 }
-                instances[i].Distance = GetSumDistance(instances[i].Cities);
+                //instances[i].Distance = GetSumDistance(instances[i].Cities);
             }
             return instances;
         }
